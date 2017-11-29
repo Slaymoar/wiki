@@ -90,9 +90,7 @@ function mainApp() {
   console.log(7);
 }
 
-console.log(1);
 $(document).ready(mainApp);
-console.log(2);
 
 
 
