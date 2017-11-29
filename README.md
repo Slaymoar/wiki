@@ -1,8 +1,8 @@
-#H1 Wiki
+# Wiki
 
-#H2 Installation
+## Installation
 
-#H4 Install Node and Yarn
+#### Install Node and Yarn
 ```bash
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt-get install -y nodejs
@@ -12,7 +12,7 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 sudo apt-get update && sudo apt-get install yarn
 ```
 
-#H4 Clone Repo and setup app
+#### Clone Repo and setup app
 ```bash
 cd /path/to/folder
 git clone git@github.com:danieprice/wiki.git
@@ -21,7 +21,9 @@ yarn
 sudo chmod +x ./app.js
 ```
 
-#H5 Start API
+## Running
+
+#### API
 ```bash
 node ./app.js
 # API started at 127.0.0.1:3000
@@ -30,4 +32,5 @@ node ./app.js
 node debug ./app.js
 ```
 
-#H5 Open browser file
+#### UI
+Just open the file on your computer for now
