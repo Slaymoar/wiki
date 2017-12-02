@@ -1,162 +1,51 @@
-var renderArticles = function(articles) {
-  console.log(9);
- /*
-  * This function takes in an article data and returns
-  * valid dom for an article block
-  * 
-  * @param Object article
-  * @return String dom
-  */ 
-  function generateArticleDOM(article, articleIndex) {
-    var dom = ''; // A String of dom
-    dom += '<div class="article" data-index="' + articleIndex + '">';
-    dom +=     '<div class="title">' + article.title + '</div>';
-    dom +=     '<div class="body">' + article.body + '</div>';
-    dom +=     '<div class="author">' + article.author + '</div>';
-    dom +=     '<div class="vote" data-index="' + articleIndex + '">' + (String(article.vote || 0)) + '</div>';
-    if (article.date) {
-      dom +=   '<div class="date">' + article.date.toString() + '</div>';
-    }
-    dom +=     '<div class="comments">'
+var onLoad = function() {
 
-    // if (article.comments && article.comments.length) {
-    //   for (var i = 0; i < article.comments.length; i++) {
-    //     dom +=         '<div class="comment">';
-    //     dom +=             '<div class="author">' + article.comments[i].author + '</div>';
-    //     dom +=             '<div class="comment">' + article.comments[i].comment + '</div>';
-    //     dom +=         '</div>';
-    //   }
-    // }
-
-    var foo = true;
-    var i = 0;
-    try {
-      while (i < articles[i].comments.length) {
-        dom +=         '<div class="comment">';
-        dom +=             '<div class="author">' + article.comments[i].author + '</div>';
-        dom +=             '<div class="comment">' + article.comments[i].comment + '</div>';
-        dom +=         '</div>';
-        i += 1;
-      }
-    } catch (e) {
-      dom += '<div>NO COMMENTS</div>';
-      console.log('article comments for ' + articleIndex + ' failed');
+  function findClosestThread(dom) {
+    var thread = dom.closest('[data-thread-id]');
+    var value = null;
+    if (thread && thread.length) {
+      value = thread.attr('data-thread-id');
     }
-      
-    dom +=     '</div>'; 
-    dom += '</div>';
-    return dom;
+    return {thread: thread, value: value};
   }
 
-  for (var i = 0; i < articles.length; i++) {
-    var domString = generateArticleDOM(articles[i], i);    
-    $('div.articles').append(domString);  
-  }
+  $('.thread .vote .up, .thread .vote .down').on('click', function(e) {
 
-  $('.article .vote').on('click', function(elem) {
-    var index = parseInt($(elem.currentTarget).attr('data-index'), 10);
-    var vote = articles[index].vote || 0;
-    vote += 1;
-    $(elem.currentTarget).html(vote);
-    articles[index].vote = vote;
+    /**
+     * Get current thread id
+     */
+
+    var threadObj = findClosestThread($(e.currentTarget));
+    var thread = threadObj.thread;
+    var value = threadObj.value;
+    var parentValue = value;
+
+    /**
+     * Potentially get parent thread id
+     */
+    if (thread.hasClass('response')) {
+      var pThreadObj = findClosestThread(thread.parent());
+      var parentValue = pThreadObj.value;
+    }
+
+    console.log('Thread: ', value, 'ParentThread: ', parentValue);
+
+    /**
+     * Find out if we are going up or down
+     */
+    var direction = 0;
+    if ($(e.currentTarget).hasClass('down')) {
+      direction = -1;
+    }
+    if ($(e.currentTarget).hasClass('up')) {
+      direction = 1;
+    }
+
+    var $vote = $(e.currentTarget).closest('.vote');
+    var $count = $vote.find('.count');
+    var count = parseInt($count.html(), 10) + direction;
+    $count.html(count);
   });
-  console.log(10);
-}
+};
 
-function fetchArticles() {
-  console.log(4);
-  var options = {
-    url: 'http://127.0.0.1:3000/articles',
-    success: function(data, status, xhr) {
-      console.log(8);
-      renderArticles(data.articles);
-      console.log(11);
-    },
-    error: function(error) {
-      console.log(8);
-      console.error(error);
-      console.log(9);
-    }
-  };
-  console.log(5);
-  $.ajax(options);
-  console.log(6);
-}
-
-
-function mainApp() {
-  console.log(3);
-  fetchArticles();
-  console.log(7);
-}
-
-$(document).ready(mainApp);
-
-
-
-/**
- * functions always have a return (if you don't specify something it is undefined)
- * functions unless otherwise noted are syncronous and will execute the next line after the return
- */
-
-function a() {
-  return 'foo';
-}
-
-function b() {
-  var foo = a();
-  return foo;
-}
-
-function c() {
-  var bar = b();
-}
-
-function a(cb) {
-  console.log(2);
-  setTimeout(cb, 5000);
-  console.log(3);
-}
-
-function b(cb) {
-  console.log(5);
-  setTimeout(cb, 2000);
-  console.log(6);
-}
-
-function c(cb) {
-  console.log(8);
-  setTimeout(cb, 3000);
-  console.log(9);
-}
-
-function cbA() {
-  console.log(13);
-  console.log('a');
-}
-
-function cbB() {
-  console.log(11);
-  console.log('b');
-}
-
-function cbC() {
-  console.log(12);
-  console.log('c');
-}
-
-console.log(1);
-a(cbA);
-console.log(4);
-b(cbB);
-console.log(7);
-c(cbC);
-console.log(10);
-
-
-
-
-
-
-
-
+$(document).ready(onLoad);

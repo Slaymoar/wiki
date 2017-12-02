@@ -166,6 +166,19 @@ h1 {
     padding-bottom: 20px;
   }
 
+  .up, .down {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .count {
+    font-weight: 500;
+    text-align: center;
+    margin-top: 5px;
+  }
+
   .responses {
     .response {
       float: left;

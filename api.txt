@@ -1,0 +1,14 @@
+[GET] /api/questions
+Return all questions
+
+[GET] /api/threads
+Return all threads
+
+[GET] /api/threads/<thread>
+Return a list of threads by id or thread
+
+[PUT] /api/vote/up/<id>
+Upvote a thread by id
+
+[PUT] /api/vote/down/<id>
+Downvote a thread by id

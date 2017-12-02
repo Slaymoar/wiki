@@ -132,6 +132,17 @@ h1 {
 .thread .body {
   padding-bottom: 20px; }
 
+.thread .up, .thread .down {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer; }
+
+.thread .count {
+  font-weight: 500;
+  text-align: center;
+  margin-top: 5px; }
+
 .thread .responses .response {
   float: left;
   border-top: 1px solid #bbb;
