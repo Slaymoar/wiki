@@ -5,5 +5,13 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "node-sass": "^4.7.2",
+    "nodemon": "^1.12.1"
+  },
+  "scripts": {
+    "build": "node-sass --include-path scss src/scss/main.scss assets/css/main.css",
+    "watch": "nodemon -e scss -x \"yarn run build\""
   }
 }
